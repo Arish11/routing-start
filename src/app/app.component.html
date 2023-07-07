@@ -2,9 +2,13 @@
   <div class="row">
     <div class="col-xs-12 col-sm-10 col-md-8 col-sm-offset-1 col-md-offset-2">
       <ul class="nav nav-tabs">
-        <li role="presentation" class="active"><a routerLink="">Home</a></li>
-        <li role="presentation"><a routerLink="/servers">Servers</a></li>
-        <li role="presentation"><a routerLink="/users">Users</a></li>
+        <!-- here we have used routerLinkActiveOptions as a property binding because we want to pass the reserved 
+        js keyword object exact which cannot be done as a string. It will evaluate if the path is an exact match of the string
+        passed in routerLink and will apply the class inside routerLinkActive only if it is true where as without this all the paths
+        which have this path in their link address will apply the class passed in routerLinkActive -->
+        <li role="presentation" routerLinkActive="active" [routerLinkActiveOptions]="{exact:true}"><a routerLink="">Home</a></li>
+        <li role="presentation" routerLinkActive="active"><a routerLink="/servers">Servers</a></li>
+        <li role="presentation" routerLinkActive="active"><a routerLink="/users">Users</a></li>
       </ul>
     </div>
   </div>
