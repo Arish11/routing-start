@@ -8,7 +8,8 @@ import { Router } from '@angular/router';
 })
 export class HomeComponent implements OnInit {
 
-  constructor(private route : Router) { }
+  constructor(private route : Router,
+              private navRoute : Router) { }
 
   ngOnInit() {
   }
@@ -19,6 +20,11 @@ export class HomeComponent implements OnInit {
 
   toUsers(){
     this.route.navigate(['/users'])
+  }
+
+  onLoadServer(id){
+    this.navRoute.navigate(['/servers',id,'edit'], {queryParams:{allowEdit:1}, fragment : "string"} )
+    //console.log(this.route.queryParams)
   }
 
 }
