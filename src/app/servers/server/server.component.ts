@@ -12,6 +12,7 @@ export class ServerComponent implements OnInit {
   searchId
 
   constructor(private serversService: ServersService,
+              private router : Router,
               private route : ActivatedRoute,) { }
 
   ngOnInit() {
@@ -26,6 +27,10 @@ export class ServerComponent implements OnInit {
         this.server = this.serversService.getServer(this.searchId)
       }
     )
+  }
+
+  onEditServer(){
+    this.router.navigate(['edit'],{ relativeTo : this.route, queryParamsHandling:'preserve'})
   }
 
 }
