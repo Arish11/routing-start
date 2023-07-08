@@ -16,6 +16,15 @@ export class UserComponent implements OnInit {
       id: this.route.snapshot.params['id'],
       name: this.route.snapshot.params['name']
     }
+
+    //Since we are loading this from users component without intializing the component again we have to subscribe to params
+    //to get the latest changes in the URL and react accordingly
+    this.route.params.subscribe(
+      (params)=>{
+        this.user.id = params['id'],
+        this.user.name = params['name'] 
+      }
+    )
   }
 
 }
