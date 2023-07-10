@@ -1,12 +1,12 @@
 import { Injectable } from "@angular/core";
-import { ActivatedRouteSnapshot, CanActivate, Router, RouterStateSnapshot } from "@angular/router"
+import { ActivatedRouteSnapshot, CanActivate, CanActivateChild, Router, RouterStateSnapshot } from "@angular/router"
 import { Observable } from "rxjs-compat";
 import { AuthService } from "./auth-service.service";
 
 //CanActivate interface forces service to implement the CanActivate method
 
 @Injectable()
-export class AuthGuard implements CanActivate {
+export class AuthGuard implements CanActivate, CanActivateChild {
 
 
     constructor(private authService: AuthService,
@@ -27,5 +27,12 @@ export class AuthGuard implements CanActivate {
                     }
                 }
             );
+    }
+
+
+    //this will also implement the same logic hence I have called the original canActivate method
+    canActivateChild(route: ActivatedRouteSnapshot,
+        state: RouterStateSnapshot): Observable<boolean> | Promise<boolean> | boolean {
+         return this.canActivate(route,state)
     }
 }
