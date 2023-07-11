@@ -16,6 +16,7 @@ import { NotFoundComponent } from './not-found/not-found.component';
 import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth-service.service';
 import { CanDeactivateGuard } from './servers/edit-server/can-deactivate.service';
+import { ErrorMessageComponent } from './error-message/error-message.component';
 
 const appRoutes : Routes = [
   {path:'',component:HomeComponent},
@@ -29,7 +30,7 @@ const appRoutes : Routes = [
     {path:":id",component:ServerComponent},
     {path:":id/edit",component:EditServerComponent, canDeactivate:[CanDeactivateGuard]},
   ]},
-  {path:"not-found", component:NotFoundComponent},
+  {path:"not-found", component:ErrorMessageComponent, data: {message : 'This is not valid'}},
   {path:"**", redirectTo:"not-found"}
 
 ]
@@ -43,7 +44,8 @@ const appRoutes : Routes = [
     UserComponent,
     EditServerComponent,
     ServerComponent,
-    NotFoundComponent
+    NotFoundComponent,
+    ErrorMessageComponent
   ],
   imports: [
     BrowserModule,
