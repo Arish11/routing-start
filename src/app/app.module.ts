@@ -17,6 +17,7 @@ import { AuthGuard } from './auth-guard.service';
 import { AuthService } from './auth-service.service';
 import { CanDeactivateGuard } from './servers/edit-server/can-deactivate.service';
 import { ErrorMessageComponent } from './error-message/error-message.component';
+import { ServerResolver } from './servers/server/server-resolver.service';
 
 const appRoutes : Routes = [
   {path:'',component:HomeComponent},
@@ -27,7 +28,7 @@ const appRoutes : Routes = [
   //canActivate: [AuthGuard],
   canActivateChild:[AuthGuard],
   component:ServersComponent, children:[
-    {path:":id",component:ServerComponent},
+    {path:":id",component:ServerComponent, resolve : {server : ServerResolver}},
     {path:":id/edit",component:EditServerComponent, canDeactivate:[CanDeactivateGuard]},
   ]},
   {path:"not-found", component:ErrorMessageComponent, data: {message : 'This is not valid'}},
@@ -52,7 +53,7 @@ const appRoutes : Routes = [
     FormsModule,
     RouterModule.forRoot(appRoutes)
   ],
-  providers: [ServersService,AuthGuard,AuthService, CanDeactivateGuard,],
+  providers: [ServersService,AuthGuard,AuthService, CanDeactivateGuard, ServerResolver],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
