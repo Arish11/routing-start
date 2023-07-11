@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 
-import {ActivatedRoute} from '@angular/router'
+import {ActivatedRoute, Router} from '@angular/router'
 
 import { ServersService } from '../servers.service';
 
@@ -15,14 +15,24 @@ export class EditServerComponent implements OnInit {
   serverStatus = '';
 
   isAllowedEdit = false
+  searchId
 
   constructor(private serversService: ServersService,
-              private route : ActivatedRoute) { }
+              private route : ActivatedRoute,
+              private router : Router) { }
 
   ngOnInit() {
-    this.server = this.serversService.getServer(1);
+    this.searchId = +this.route.snapshot.params['id']
+    this.server = this.serversService.getServer(this.searchId);
     this.serverName = this.server.name;
     this.serverStatus = this.server.status;
+
+    this.route.params.subscribe(
+      (params)=>{
+        this.searchId = +params['id']
+        this.server = this.serversService.getServer(this.searchId);
+      }
+    )
 
     this.route.queryParams.subscribe(
       (queryParams)=>{
@@ -33,6 +43,7 @@ export class EditServerComponent implements OnInit {
 
   onUpdateServer() {
     this.serversService.updateServer(this.server.id, {name: this.serverName, status: this.serverStatus});
+    this.router.navigate(['../'], {relativeTo:this.route, queryParams:{allowEdit:1}, fragment:"loaded"})
   }
 
 }
