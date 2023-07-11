@@ -51,7 +51,9 @@ const appRoutes : Routes = [
   imports: [
     BrowserModule,
     FormsModule,
-    RouterModule.forRoot(appRoutes)
+    RouterModule.forRoot(appRoutes, {useHash:true})//When an application is deployed on the web server all the routes are first handled by
+    //the deploying server. By using the useHash property we tell the server to only test the route path before # and ignore the rest
+    //as angular will take care of those. This is used to support applications on older browsers
   ],
   providers: [ServersService,AuthGuard,AuthService, CanDeactivateGuard, ServerResolver],
   bootstrap: [AppComponent]
